@@ -4,14 +4,17 @@
 
 void setup() {
   Serial.begin(9600);
-
   homeSpan.begin(Category::Lighting, "HomeSpan LightBulb");
+  
   new SpanAccessory();
     new Service::AccessoryInformation();
       new Characteristic::Identify();
 
-    new Service::LightBulb();
-      new Characteristic::On();
+  new SpanAccessory();
+    new Service::AccessoryInformation();
+      new Characteristic::Identify();            
+      new Characteristic::Name("Simple LED"); 
+    new My_Lamp(25);
 }
 
 void loop() {
