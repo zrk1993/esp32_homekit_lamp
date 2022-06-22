@@ -20,8 +20,10 @@ struct My_Lamp : Service::LightBulb {
     LOG1(power->getNewVal()?"true":"false");
     LOG1("  New level=");
     LOG1(level->getNewVal());
+    int val = power->getNewVal() * level->getNewVal() * 2.55;
+    digitalWrite(ledPin, val);
+    LOG1("  New val=" + val);
     LOG1("\n");
-    digitalWrite(ledPin, power->getNewVal() * level->getNewVal() * 2.55);
     return(true);
   }
 };
