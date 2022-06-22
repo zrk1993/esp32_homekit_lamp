@@ -4,6 +4,7 @@
 
 void setup() {
   Serial.begin(9600);
+  
   homeSpan.setLogLevel(2);
   homeSpan.begin(Category::Lighting, "HomeSpan LightBulb");
 

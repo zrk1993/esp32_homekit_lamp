@@ -8,22 +8,16 @@ struct My_Lamp : Service::LightBulb {
   My_Lamp(int ledPin) : Service::LightBulb(){
     power=new Characteristic::On();
     level=new Characteristic::Brightness(50);
-    level->setRange(5, 100, 1);
+    level->setRange(0, 100, 10);
     this->ledPin = ledPin;
     pinMode(ledPin, OUTPUT);
+    dacWrite(ledPin, 255);
   }
 
   boolean update(){
-    LOG1("Updating On/Off LED on pin=");
-    LOG1(ledPin);
-    LOG1("  New Power=");
-    LOG1(power->getNewVal()?"true":"false");
-    LOG1("  New level=");
-    LOG1(level->getNewVal());
     int val = power->getNewVal() * level->getNewVal() * 2.55;
-    digitalWrite(ledPin, val);
-    LOG1("  New val=" + val);
-    LOG1("\n");
+    Serial.printf("update power: %d, level: %d, val: %d\n",  power->getNewVal(), level->getNewVal(), val);
+    dacWrite(ledPin, val);
     return(true);
   }
 };
