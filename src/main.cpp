@@ -6,6 +6,7 @@
 #include "DEV_Lamp.h"
 
 AsyncWebServer server(80);
+AsyncWebSocket ws("/ws");
 
 void setupWeb();
 
@@ -30,13 +31,14 @@ void setup() {
 
   new SpanAccessory();
     new Service::AccessoryInformation();
-      new Characteristic::Identify();            
-      new Characteristic::Name("Simple LED"); 
+      new Characteristic::Identify();
+      new Characteristic::Name("Simple LED");
     new DEV_Lamp(25);
 }
 
 void loop() {
   homeSpan.poll();
+  ws.cleanupClients();
 }
 
 void setupWeb() {
@@ -47,6 +49,8 @@ void setupWeb() {
   // } else {
   //   Serial.printf("http://esp32.local\n\n");
   // }
+
+  server.addHandler(&ws);
 
 	server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
 		request->send(200, "text/plain", "hello World");
