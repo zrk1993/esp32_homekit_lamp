@@ -1,11 +1,11 @@
-#include "HomeSpan.h"
+#include <HomeSpan.h>
 
-struct My_Lamp : Service::LightBulb {
+struct DEV_Lamp : Service::LightBulb {
   int ledPin;
   SpanCharacteristic *power;
   SpanCharacteristic *level;
 
-  My_Lamp(int ledPin) : Service::LightBulb(){
+  DEV_Lamp(int ledPin) : Service::LightBulb(){
     power=new Characteristic::On();
     level=new Characteristic::Brightness(50);
     level->setRange(0, 100, 10);
